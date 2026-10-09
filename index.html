@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#080913"/>
+<title>NEON CHRONICLES — Los detectives HOLOS | Temporada I</title>
+<style>
+:root {color-scheme:dark;--bg:#070a12;--panel:#0e1423;--panel2:#141c2e;--cyan:#4aebed;--magenta:#ff4fca;--violet:#9e86ff;--gold:#ffd089;--txt:#eef4ff;--mute:#a0b2cb;--line:rgba(96,227,255,.20)}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}body{margin:0;min-height:100svh;color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse 80vw 300px at 80% 0%,rgba(184,34,194,.17),transparent),radial-gradient(ellipse 100vw 340px at 0% 45%,rgba(0,170,220,.13),transparent),linear-gradient(180deg,#070914,#070b15 70%,#080612);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(65,175,224,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(65,175,224,.045) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(black,transparent 80%)}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}button[disabled]{opacity:.4;cursor:not-allowed}
+#app{position:relative;z-index:1;max-width:980px;margin:auto;padding:12px 14px 46px}
+.top{display:flex;gap:8px;justify-content:space-between;align-items:center;min-height:56px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.wordmark{display:flex;gap:10px;align-items:center;min-width:0}.logo{height:32px;width:32px;border:1px solid var(--cyan);display:grid;place-items:center;clip-path:polygon(20% 0,80% 0,100% 50%,80% 100%,20% 100%,0 50%);font-size:12px;font-weight:900;color:var(--cyan);text-shadow:0 0 10px var(--cyan)}
+.wordmark strong{display:block;font-size:12px;letter-spacing:1.5px}.wordmark small{display:block;font-size:9px;color:var(--mute);letter-spacing:1.2px;margin-top:3px}
+.tools{display:flex;gap:5px}.tool{background:rgba(16,26,45,.9);border:1px solid var(--line);color:var(--txt);border-radius:10px;min-height:39px;padding:8px 11px;font-size:12px}.tool.active{border-color:var(--cyan);color:var(--cyan)}
+.intro{max-width:740px;margin:0 auto;padding-top:16px}.micro{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:750}.hero-title{font-size:clamp(27px,7vw,60px);line-height:1.02;letter-spacing:.035em;margin:8px 0 0;font-weight:900;text-shadow:0 0 32px rgba(58,203,240,.28)}.hero-title span{color:var(--magenta)}.subhead{color:#c5d3e8;font-size:14px;letter-spacing:2px;margin:10px 0 14px}.intro .art{height:215px}
+.callout{border-left:3px solid var(--magenta);background:linear-gradient(90deg,rgba(255,79,202,.1),rgba(18,26,40,.8));padding:13px 15px;margin:15px 0;border-radius:0 10px 10px 0;line-height:1.55;font-size:14px}.primary{width:100%;min-height:58px;border:1px solid rgba(255,255,255,.23);color:white;background:linear-gradient(105deg,#ac1d68,#8a27bd 55%,#3c71d6);border-radius:13px;font-weight:850;font-size:15px;letter-spacing:1px;box-shadow:0 0 27px rgba(196,53,177,.25);transition:transform .1s}.primary:active{transform:scale(.985)}
+.underbtn{font-size:12px;line-height:1.5;color:var(--mute);margin:13px 0}.underbtn strong{color:var(--cyan)}
+.progress{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:15px 0 10px}.chapter{font-size:11px;color:var(--cyan);font-weight:750;letter-spacing:1.4px}.tracker{font-size:11px;color:#c2cce0}.progress-track{height:4px;background:rgba(99,158,187,.16);border-radius:9px;overflow:hidden;margin-bottom:14px}.progress-inner{height:100%;background:linear-gradient(90deg,var(--magenta),var(--cyan));transition:width .3s;box-shadow:0 0 9px var(--cyan)}
+.frame{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(17,26,45,.94),rgba(9,17,29,.94));box-shadow:0 12px 40px rgba(0,0,0,.34),0 0 22px rgba(53,213,237,.04);overflow:hidden;position:relative}
+.frame::after{content:"";position:absolute;inset:8px;z-index:0;border:1px solid rgba(81,230,241,.06);border-radius:10px;pointer-events:none}
+.art{height:185px;position:relative;background:radial-gradient(ellipse at 50% 65%,rgba(32,149,180,.2),transparent 51%),linear-gradient(180deg,rgba(6,12,22,.45),rgba(9,14,27,.75));overflow:hidden}.art::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.27;background:repeating-linear-gradient(0deg,transparent 0px,transparent 4px,rgba(91,214,229,.05) 5px,transparent 6px)}.art svg{width:100%;height:100%;display:block}.art .city{opacity:.27}.art .figure{filter:drop-shadow(0 0 15px rgba(82,223,255,.21));opacity:.95}.art .node{filter:drop-shadow(0 0 7px currentColor);opacity:.50;transition:opacity .25s,filter .25s}.art .node.on{opacity:1;filter:drop-shadow(0 0 13px currentColor)}.art .scanray{animation:scan 6s linear infinite}.art .pulse{transform-box:fill-box;transform-origin:center;animation:ping 2.5s ease-in-out infinite}
+@keyframes ping{50%{opacity:.33;transform:scale(1.45)}}@keyframes scan{0%{transform:translateY(-180px)}100%{transform:translateY(220px)}}
+.scene{padding:16px 16px 6px}.scene-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.episode{font-size:10px;letter-spacing:1.4px;color:var(--magenta);font-weight:750}.scene-num{font-size:10px;letter-spacing:1px;color:var(--mute)}.scene h2{font-size:clamp(23px,5vw,33px);margin:4px 0 10px;line-height:1.17;letter-spacing:.01em}.speaker{font-size:11px;color:var(--cyan);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin:0 0 9px}.narrative{font-size:15px;line-height:1.64;color:#d9e4f3;margin:0 0 13px;white-space:pre-line}.reaction{background:rgba(72,232,222,.075);border-left:2px solid var(--cyan);padding:9px 12px;color:#cae4e9;font-size:12px;line-height:1.5;margin:0 0 12px;border-radius:0 8px 8px 0}
+.prompt{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin:12px 0 10px;font-weight:800}
+.choices{display:flex;flex-direction:column;gap:9px;padding:0 16px 18px}.choice{position:relative;width:100%;min-height:62px;border:1px solid rgba(87,211,235,.22);border-radius:12px;background:linear-gradient(90deg,rgba(21,35,58,.97),rgba(12,24,39,.91));color:var(--txt);display:flex;text-align:left;align-items:center;gap:12px;padding:12px 13px;transition:transform .12s,border-color .15s,background .15s;touch-action:manipulation}.choice:active{transform:scale(.99);border-color:var(--cyan)}.choice .index{flex:0 0 29px;height:29px;border:1px solid rgba(255,79,202,.4);color:var(--magenta);border-radius:8px;display:grid;place-items:center;font-size:13px;font-weight:850}.choice strong{display:block;font-size:14px;line-height:1.3}.choice small{display:block;margin-top:4px;font-size:11px;color:#acbdd3;line-height:1.45}.choice .chev{margin-left:auto;color:var(--cyan);font-size:18px}.choice[disabled]{opacity:.35}
+.floating-notes{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:13px 0 10px}.hint{font-size:12px;color:var(--mute);line-height:1.35}.evidence-btn{font-size:12px;font-weight:700;color:var(--cyan);border:1px solid var(--line);background:rgba(21,32,47,.8);border-radius:9px;padding:9px 11px;white-space:nowrap}
+.drawer{display:none;margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(15,22,36,.95)}.drawer.open{display:block}.drawer h3{margin:0 0 8px;font-size:13px;color:var(--cyan)}.drawer-item{font-size:12px;line-height:1.5;border-bottom:1px solid var(--line);padding:7px 0}.drawer-item:last-child{border:0}.empty{font-size:12px;color:var(--mute)}.record{font-size:11px;color:#8191ab;margin-top:12px;line-height:1.5}.footer{margin:18px 0;text-align:center;font-size:10px;line-height:1.5;color:#8597af}.footer strong{color:#a6bce0}
+.epilogue{border:1px solid rgba(255,208,137,.25);padding:14px 16px;border-radius:12px;background:linear-gradient(110deg,rgba(255,208,137,.11),rgba(255,79,202,.06));margin:12px 0 15px}.epilogue strong{color:var(--gold);font-size:18px}.epilogue p{color:#e4def1;font-size:13px;line-height:1.55;margin:8px 0 0}
+.result-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:10px 0}.result-stat{background:rgba(14,28,47,.9);border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center}.result-stat strong{display:block;color:var(--cyan);font-size:20px}.result-stat small{font-size:10px;color:var(--mute)}
+.overlay{position:fixed;inset:0;z-index:15;background:rgba(2,5,12,.82);display:grid;place-items:center;padding:16px;backdrop-filter:blur(9px)}.overlay[hidden]{display:none}.modal{width:min(520px,100%);max-height:85svh;overflow-y:auto;padding:21px;border:1px solid var(--cyan);border-radius:17px;background:#121b2c;box-shadow:0 0 42px rgba(48,220,243,.16)}.modal h2{margin:0 0 10px;font-size:24px}.modal p{font-size:14px;line-height:1.6;color:#d4e3f4}.modal .primary{min-height:49px}
+.volwrap{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--mute)}.volwrap input{width:130px;accent-color:var(--cyan)}
+@media (min-width:720px){#app{padding:20px 28px 54px}.story-layout{display:grid;grid-template-columns:40% 60%;gap:18px;align-items:start}.story-layout>.art{height:380px;position:sticky;top:20px;border:1px solid var(--line);border-radius:17px}.scene{padding:23px 22px 8px}.choices{padding:0 22px 24px}.intro .art{height:260px}}
+@media (max-width:355px){.wordmark strong{font-size:10px}.top .tool{padding:8px 7px;font-size:11px}.art{height:156px}.scene{padding:13px 12px 6px}.choices{padding:0 12px 15px}.choice strong{font-size:13px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Temporada I — Detective HUD */
+.detective-strip{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:10px 12px;border:1px solid rgba(255,79,202,.22);border-radius:9px;background:rgba(255,79,202,.045);font-size:9px;font-weight:800;letter-spacing:.75px;color:#afd8ef}
+.detective-strip span:first-child{color:var(--magenta)}
+.season-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.season-stats>div{padding:11px 5px;border:1px solid var(--line);background:rgba(15,27,44,.88);border-radius:11px;text-align:center}
+.season-stats strong{display:block;font-size:25px;color:var(--cyan)}
+.season-stats small{display:block;font-size:9px;color:var(--mute);margin-top:2px}
+.lens-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.lens{padding:10px;border:1px solid rgba(96,227,255,.12);border-radius:9px;background:rgba(14,22,38,.85)}
+.lens.used{border-color:var(--cyan);background:rgba(74,235,237,.07)}
+.lens strong{font-size:10px;color:var(--magenta);display:block}.lens.used strong{color:var(--cyan)}
+.lens small{display:block;font-size:10px;color:var(--mute);line-height:1.45;margin-top:3px}
+@media(max-width:390px){.detective-strip{font-size:8px;gap:5px}.art{height:160px}.scene h2{font-size:22px}.scene{padding-top:12px}.intro .art{height:174px}.lens-grid{grid-template-columns:1fr}}
+@media(min-width:720px){.story-layout>.frame:first-child{position:sticky;top:16px}.story-layout>.frame:first-child .art{height:350px}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="wordmark"><div class="logo" aria-hidden="true">H</div><div><strong>THE FOUR DIAPHRAGMS</strong><small>NEON CHRONICLES / HOLOS</small></div></div>
+    <div class="tools"><button class="tool" id="sound-btn" aria-pressed="false" title="Activar música cyberpunk">♫ OFF</button><button class="tool" id="help-btn" title="Cómo jugar">?</button><button class="tool" id="home-btn" title="Volver al menú">⌂</button></div>
+  </header>
+  <main id="screen" aria-live="polite"></main>
+  <div class="footer"><strong>MÉTODO HOLOS</strong> · Temporada I · Ficción interactiva. Las relaciones son un modelo pedagógico, no diagnóstico ni tratamiento.</div>
+</div>
+<div class="overlay" id="help-modal" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><div class="modal"><div class="micro">PROTOCOLO DE INICIO</div><h2 id="help-title">¿Cómo se juega?</h2><p><strong>Eres detective biomecánico.</strong> Lee cada escena y elige tu acción. Las pistas anatómicas que descubras se guardan en el cuaderno del detective y afectarán a las decisiones posteriores.</p><p><strong>Tus cuatro herramientas son las lentes pélvica, respiratoria, cervical y craneal.</strong> Investigarás doce regiones en ocho capítulos, construirás hipótesis y decidirás cómo termina el caso. Puedes repetir para hallar desenlaces alternativos.</p><p>La música es opcional: se activa tocando ♫ OFF. Tu historia se guarda en este dispositivo cuando el navegador permite almacenamiento local.</p><label class="volwrap">VOLUMEN <input type="range" id="music-volume" min="0" max="100" value="38" aria-label="Volumen de la banda sonora"><span id="music-vol-label">38%</span></label><button class="primary" id="close-help" style="margin-top:16px">ENTENDIDO · JUGAR →</button></div></div>
+<script>
+class SoundEngine {
+            constructor() {
+                this.ctx = null;
+                this.enabled = false;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) {
+                        this.ctx = new AudioContext();
+                    }
+                }
+            }
+
+            toggle() {
+                this.enabled = !this.enabled;
+                if (this.enabled && !this.ctx) {
+                    this.init();
+                }
+                if (this.enabled && this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+                return this.enabled;
+            }
+
+            playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.1) {
+                if (!this.enabled || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch (e) {
+                    console.error("Audio error", e);
+                }
+            }
+
+            playPulseSound() {
+                this.playTone(320, 'sine', 0.15, 0.08);
+            }
+
+            playZoneBeep() {
+                this.playTone(600, 'sine', 0.05, 0.03);
+            }
+
+            playRhythmSyncSound() {
+                this.playTone(523.25, 'triangle', 0.1, 0.1);
+                setTimeout(() => this.playTone(659.25, 'triangle', 0.15, 0.12), 80);
+            }
+
+            playRhythmMissSound() {
+                this.playTone(200, 'sawtooth', 0.12, 0.08);
+            }
+
+            playSuccessSound() {
+                if (!this.enabled || !this.ctx) return;
+                this.playTone(440, 'triangle', 0.1, 0.1);
+                setTimeout(() => this.playTone(554.37, 'triangle', 0.1, 0.1), 100);
+                setTimeout(() => this.playTone(659.25, 'triangle', 0.25, 0.12), 200);
+            }
+
+            playFailSound() {
+                if (!this.enabled || !this.ctx) return;
+                this.playTone(220, 'sawtooth', 0.15, 0.08);
+                setTimeout(() => this.playTone(180, 'sawtooth', 0.25, 0.08), 150);
+            }
+        }
+class CyberpunkMusicEngine {
+            constructor(sound) {
+                this.sound = sound;
+                this.ctx = null;
+                this.bus = null;
+                this.filter = null;
+                this.timer = null;
+                this.enabled = false;
+                this.volume = 38;
+                this.mode = 'menu';
+                this.step = 0;
+                this.nextTime = 0;
+                this.bpm = 100;
+                this.noise = null;
+                try {
+                    const saved = Number(localStorage.getItem('holos_music_volume_v42'));
+                    if (Number.isFinite(saved) && saved >= 0 && saved <= 100 && localStorage.getItem('holos_music_volume_v42') !== null) this.volume = saved;
+                } catch (_) {}
+            }
+            init() {
+                if (this.ctx) return true;
+                this.sound.init();
+                this.ctx = this.sound.ctx;
+                if (!this.ctx) return false;
+                this.bus = this.ctx.createGain();
+                this.bus.gain.value = 0;
+                this.filter = this.ctx.createBiquadFilter();
+                this.filter.type = 'lowpass';
+                this.filter.frequency.value = 5200;
+                this.filter.Q.value = 0.6;
+                this.filter.connect(this.bus);
+                this.bus.connect(this.ctx.destination);
+                const samples = Math.floor(this.ctx.sampleRate * 0.18);
+                this.noise = this.ctx.createBuffer(1, samples, this.ctx.sampleRate);
+                const data = this.noise.getChannelData(0);
+                let seed = 41735;
+                for (let i = 0; i < samples; i++) {
+                    seed = (1664525 * seed + 1013904223) >>> 0;
+                    data[i] = ((seed / 4294967296) * 2 - 1);
+                }
+                return true;
+            }
+            start() {
+                if (this.enabled) return true;
+                if (!this.init()) return false;
+                this.enabled = true;
+                // This is called only from a player tap, respecting mobile autoplay restrictions.
+                if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+                this.step = 0;
+                this.nextTime = this.ctx.currentTime + 0.065;
+                const now = this.ctx.currentTime;
+                this.bus.gain.cancelScheduledValues(now);
+                this.bus.gain.setValueAtTime(this.bus.gain.value, now);
+                this.bus.gain.setTargetAtTime(this.volume / 100 * 0.44, now, 0.15);
+                this.timer = setInterval(() => this.schedule(), 85);
+                this.schedule();
+                return true;
+            }
+            stop() {
+                this.enabled = false;
+                if (this.timer !== null) { clearInterval(this.timer); this.timer = null; }
+                if (this.bus && this.ctx) {
+                    const now = this.ctx.currentTime;
+                    this.bus.gain.cancelScheduledValues(now);
+                    this.bus.gain.setTargetAtTime(0, now, 0.06);
+                }
+            }
+            toggle() { if (this.enabled) { this.stop(); return false; } return this.start(); }
+            setMode(mode) { this.mode = ['menu', 'explore', 'challenge', 'focus', 'victory'].includes(mode) ? mode : 'explore'; }
+            setVolume(pct) {
+                const n = Number(pct);
+                this.volume = Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 38;
+                try { localStorage.setItem('holos_music_volume_v42', String(this.volume)); } catch (_) {}
+                if (this.bus && this.ctx) {
+                    const now = this.ctx.currentTime;
+                    this.bus.gain.cancelScheduledValues(now);
+                    this.bus.gain.setTargetAtTime(this.enabled ? this.volume / 100 * 0.44 : 0, now, 0.05);
+                }
+            }
+            schedule() {
+                if (!this.enabled || !this.ctx || this.ctx.state !== 'running') return;
+                const quarter = 60 / this.bpm;
+                let guard = 0;
+                // Always schedule only a short lookahead and never drift indefinitely on background tabs.
+                if (this.nextTime < this.ctx.currentTime - 0.7) this.nextTime = this.ctx.currentTime + 0.04;
+                while (this.nextTime < this.ctx.currentTime + 0.18 && guard++ < 12) {
+                    this.playStep(this.step, this.nextTime);
+                    this.nextTime += quarter / 4;
+                    this.step = (this.step + 1) % 64;
+                }
+            }
+            tone(freq, when, duration, amp, type = 'sine', cutoff = 0, attack = 0.012) {
+                const osc = this.ctx.createOscillator();
+                const env = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, when);
+                let output = env;
+                if (cutoff) {
+                    const lp = this.ctx.createBiquadFilter();
+                    lp.type = 'lowpass';
+                    lp.frequency.setValueAtTime(cutoff, when);
+                    osc.connect(lp); lp.connect(env);
+                } else { osc.connect(env); }
+                env.gain.setValueAtTime(0.0001, when);
+                env.gain.linearRampToValueAtTime(amp, when + attack);
+                env.gain.setTargetAtTime(0.0001, when + Math.max(attack + 0.02, duration * 0.43), Math.max(0.025, duration * 0.18));
+                output.connect(this.filter);
+                osc.start(when);
+                osc.stop(when + duration + 0.08);
+            }
+            percussion(when, type) {
+                if (type === 'kick') {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(92, when);
+                    osc.frequency.exponentialRampToValueAtTime(43, when + 0.16);
+                    gain.gain.setValueAtTime(0.14, when);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, when + 0.24);
+                    osc.connect(gain); gain.connect(this.filter);
+                    osc.start(when); osc.stop(when + 0.26);
+                    return;
+                }
+                const source = this.ctx.createBufferSource();
+                source.buffer = this.noise;
+                const hp = this.ctx.createBiquadFilter();
+                hp.type = 'highpass';
+                hp.frequency.value = type === 'snare' ? 1300 : 6000;
+                const gain = this.ctx.createGain();
+                const length = type === 'snare' ? 0.16 : 0.055;
+                gain.gain.setValueAtTime(type === 'snare' ? 0.065 : 0.022, when);
+                gain.gain.exponentialRampToValueAtTime(0.0001, when + length);
+                source.connect(hp); hp.connect(gain); gain.connect(this.filter);
+                source.start(when); source.stop(when + length);
+            }
+            playStep(step, at) {
+                const bar = Math.floor(step / 16), n = step % 16;
+                const chords = [
+                    [110, 130.81, 164.81],     // Am
+                    [87.31, 110, 130.81],      // F
+                    [130.81, 164.81, 196],     // C
+                    [98, 123.47, 146.83]      // G
+                ];
+                const roots = [55, 43.65, 65.41, 49];
+                const ambient = this.mode === 'menu' || this.mode === 'focus' || this.mode === 'victory';
+                if (n === 0) {
+                    chords[bar].forEach((hz, i) => this.tone(hz * 2, at, 2.65, ambient ? 0.022 : 0.016, 'sine', 0, 0.14 + i * 0.025));
+                    this.tone(roots[bar] / 2, at, 1.6, ambient ? 0.032 : 0.04, 'triangle', 420, 0.055);
+                }
+                if (this.mode === 'focus' || this.mode === 'victory') {
+                    // Minimal texture: no metronomic accents to interfere with breathing timing.
+                    if (n === 8) this.tone(chords[bar][1] * 2, at, 1.15, 0.009, 'sine');
+                    return;
+                }
+                if (this.mode === 'menu') {
+                    if (n === 8) this.tone(chords[bar][2] * 2, at, 0.8, 0.009, 'triangle', 1100);
+                    return;
+                }
+                const energetic = this.mode === 'challenge';
+                if ([0, 3, 6, 8, 11, 14].includes(n)) {
+                    const freq = roots[bar] * (n === 6 || n === 14 ? 1.5 : 1);
+                    this.tone(freq, at, 0.21, energetic ? 0.095 : 0.06, 'sawtooth', 360, 0.006);
+                }
+                if ([2, 6, 10, 14].includes(n)) {
+                    this.tone(chords[bar][(n / 2) % 3 | 0] * 4, at, 0.19, energetic ? 0.019 : 0.012, 'triangle', 1600);
+                }
+                if (n === 0 || n === 8) this.percussion(at, 'kick');
+                if (energetic && (n === 4 || n === 12)) this.percussion(at, 'snare');
+                if (!energetic && n === 12) this.percussion(at, 'snare');
+                if (energetic && n % 2 === 0) this.percussion(at, 'hat');
+            }
+            stinger() {
+                if (!this.enabled || !this.ctx || this.ctx.state !== 'running') return;
+                const start = this.ctx.currentTime + 0.035;
+                [220, 261.63, 329.63, 440].forEach((freq, i) => {
+                    this.tone(freq, start + i * 0.12, 0.55, 0.055, 'triangle', 2000, 0.015);
+                });
+            }
+        }
+
+/* NEON CHRONICLES — TEMPORADA I · Motor narrativo autónomo */
+const KEY='holos_neon_chronicles_temporada1_v2';
+const ENDKEY='holos_neon_chronicles_endings_v2';
+const CHAPTERS={
+  1:'LA LLAMADA',2:'HUELLAS EN EL NEÓN',3:'LA CÁMARA DE PRESIÓN',4:'EL CIRCUITO SUPERIOR',
+  5:'EL GUARDIÁN',6:'EL TABLERO INVISIBLE',7:'LA CIUDAD MIENTE',8:'EL VEREDICTO'
+};
+const REGIONS={
+  foot:{name:'Pie y tobillo',ch:2,focus:'foot', finding:'En la marcha ficticia, la carga se concentra en un borde del pie. La huella cambia al variar la velocidad: no es un rasgo fijo.',link:'Una estrategia que empiece por el apoyo podría cambiar las hipótesis sobre rodilla y pelvis.',tag:'APOYO'},
+  knee:{name:'Rodilla',ch:2,focus:'knee',finding:'El gesto de flexión no es igual cuando NORA camina que cuando permanece sentada. El escáner no detecta una única causa.',link:'Conviene contrastar este hallazgo con el apoyo y la cadera.',tag:'MOVIMIENTO'},
+  hip:{name:'Cadera',ch:2,focus:'hip',finding:'La rotación simulada varía cuando el apoyo cambia de lado. Aparece una pista mecánica que el análisis del cuello había pasado por alto.',link:'La pelvis podría estar adaptándose a un patrón del miembro inferior.',tag:'CADENA'},
+  pelvis:{name:'Diafragma pélvico',ch:2,focus:'pelvis',finding:'La respuesta del suelo pélvico va retrasada respecto a ciertas fases respiratorias. El dato no explica por sí mismo los síntomas.',link:'La clave podría estar en la coordinación con el diafragma respiratorio.',tag:'LENTE I'},
+  abdomen:{name:'Abdomen y vísceras',ch:3,focus:'abdomen',finding:'El mapa de movilidad abdominovisceral del simulador cambia entre inspiración y espiración. Una señal se amplifica durante la respiración forzada.',link:'Una observación de movilidad no establece por sí sola el origen de una lesión.',tag:'CONTENEDOR'},
+  resp:{name:'Diafragma respiratorio',ch:3,focus:'resp',finding:'La excursión costal simulada es asimétrica y depende del ritmo. Durante el ciclo lento, la amplitud resulta más regular.',link:'Esta observación puede contrastarse con la señal pélvica y torácica.',tag:'LENTE II'},
+  thorax:{name:'Tórax y costillas',ch:3,focus:'thorax',finding:'La expansión de la parrilla costal no coincide en ambos lados. Cambia también la tensión representada en la entrada torácica.',link:'Respiración, costillas y cuello podrían formar parte de una relación funcional.',tag:'EXPANSIÓN'},
+  shoulder:{name:'Escápula y hombro',ch:4,focus:'shoulder',finding:'Al elevar el brazo, el movimiento escapular del holograma cambia con la postura torácica. El hombro no se comporta igual en todos los contextos.',link:'Hay que diferenciar una restricción local de una adaptación dependiente del tórax.',tag:'CINTURA'},
+  wrist:{name:'Codo, muñeca y mano',ch:4,focus:'wrist',finding:'NORA activa un terminal con la mano derecha. El patrón de uso repetido coincide con fatiga, pero no explica las alteraciones respiratorias.',link:'No todas las pistas pertenecen a una misma cadena causal.',tag:'USO'},
+  cervical:{name:'Entrada torácica y cervicales',ch:4,focus:'cervical',finding:'La limitación del cuello cambia con la posición de la caja torácica. Un bloqueo cervical constante no describe todo el fenómeno.',link:'Esta transición podría ser una zona de adaptación entre el tórax y la cabeza.',tag:'LENTE III'},
+  jaw:{name:'Mandíbula y ATM',ch:5,focus:'jaw',finding:'La mandíbula presenta un patrón de cierre diferente tras un episodio de estrés. El bruxismo matinal podría tener más de una dimensión.',link:'La experiencia del paciente importa tanto como la lectura de los indicadores.',tag:'ATM'},
+  cran:{name:'Base craneal y suboccipitales',ch:5,focus:'cran',finding:'La señal suboccipital simulada aumenta cuando la región cervical se fatiga. La respuesta del cráneo no es independiente del cuello.',link:'La relación craneocervical podría explicar una parte de la historia, no toda.',tag:'LENTE IV'}
+};
+const LENSES={
+  pelvic:{name:'LENTE PÉLVICA',description:'Relacionar apoyo, cadera, pelvis y presión abdominopélvica.'},
+  respiratory:{name:'LENTE RESPIRATORIA',description:'Contrastar ritmo, costillas, movilidad y presión del tronco.'},
+  cervical:{name:'LENTE CERVICAL',description:'Interpretar cuello, entrada torácica y cintura escapular.'},
+  cranial:{name:'LENTE CRANEAL',description:'Examinar base del cráneo, mandíbula y adaptación cervical.'}
+};
+const ENDINGS={
+ resonance:{label:'LA RESONANCIA',kind:'CASO RECONSTRUIDO',text:'Has contrastado indicios de distintas regiones, escuchado a NORA y distinguido las relaciones funcionales de las conjeturas. La red de la ciudad ya no puede esconder las contradicciones. El caso permanece abierto a revisión, pero tu informe es sólido.'},
+ bridge:{label:'EL PUENTE INVISIBLE',kind:'CONEXIÓN RECUPERADA',text:'Tu hipótesis global identifica conexiones relevantes entre las regiones investigadas. Quedan vacíos, pero has creado un mapa de trabajo que se puede seguir contrastando.'},
+ partial:{label:'EL EXPEDIENTE INCOMPLETO',kind:'PREGUNTAS ABIERTAS',text:'Has defendido una explicación con indicios escasos. No es un fracaso irreversible: falta explorar, contrastar y volver a preguntar.'},
+ upper:{label:'LA CADENA QUE NO VIERON',kind:'RUTA SUPERIOR',text:'Las pistas de tórax, hombro y cuello encajan mejor juntas que aisladas. Descubres una historia de movimiento que el algoritmo había fragmentado.'},
+ patient:{label:'LA VOZ DE NORA',kind:'CONFIANZA PRESERVADA',text:'En lugar de reducir a NORA a un holograma, mantienes abierta la conversación. Su relato aporta datos que el protocolo omitía. No tienes todas las respuestas, pero ella vuelve a confiar en la investigación.'},
+ ghost:{label:'FANTASMAS EN EL CIRCUITO',kind:'CONSPIRACIÓN DESCUBIERTA',text:'La pista de los registros coincide con la del testigo. El sistema ha filtrado datos para mostrar patrones simplificados. Alguien diseñó la omisión. El siguiente caso ya te está esperando.'},
+ exposed:{label:'LA CIUDAD DESPIERTA',kind:'SISTEMA REVELADO',text:'Con registros verificables y pruebas contrastadas, revelas públicamente los fallos del protocolo. La investigación abre una nueva etapa de la ciudad HOLOS.'},
+ silenced:{label:'EVIDENCIA SIN PRUEBAS',kind:'ACUSACIÓN PREMATURA',text:'Haces pública una sospecha antes de reunir registros suficientes. La corporación desacredita la investigación. Te queda una nueva lección: una hipótesis potente no sustituye a la evidencia.'},
+ falsegreen:{label:'CUATRO LUCES VERDES',kind:'FALSO POSITIVO',text:'La automatización muestra cuatro diafragmas equilibrados en pantalla. NORA sigue describiendo limitaciones. El indicador era una representación; la persona, una realidad mucho más compleja.'},
+ overload:{label:'LA REACCIÓN EN CADENA',kind:'SOBRECARGA SIMULADA',text:'Intentaste imponer una solución sobre un sistema que todavía no habías comprendido. Una región cambia, pero otras pierden capacidad de adaptación. Es hora de volver a observar.'},
+ guardian:{label:'EL GUARDIÁN DE LOS DATOS',kind:'DECISIÓN ÉTICA',text:'Decides proteger la información personal de NORA antes de enfrentarte al sistema. La evidencia puede conservarse de manera responsable. La confianza pasa a formar parte del desenlace.'},
+ blackout:{label:'NOCHE SIN SEÑAL',kind:'SISTEMA DESCONECTADO',text:'Apagas la red automatizada y la ciudad queda a oscuras. Salvas el expediente de una interpretación precipitada, pero pierdes datos útiles. La siguiente investigación tendrá que aprender a vivir sin el viejo mapa.'},
+ local:{label:'LA TRAMPA DEL SÍNTOMA',kind:'RUTA LOCAL',text:'Concentrarte únicamente en el cuello cambió una señal, pero no resolvió las contradicciones del resto del cuerpo. Tu mapa necesita más regiones y más preguntas.'},
+ sequel:{label:'LA PUERTA DOCE',kind:'NUEVA INVESTIGACIÓN',text:'Te niegas a cerrar el caso con una respuesta fácil. Una nueva ficha aparece en el panel: doce regiones, cuatro lentes y otra historia escondida bajo el neón. La temporada continúa.'}
+};
+const END_COUNT=Object.keys(ENDINGS).length;
+const init=()=>({scene:'call',chapter:1,clues:[],history:[],lenses:[],trust:2,clarity:0,pressure:0,flags:[],theory:'',lastResult:'',ended:null});
+let state=init(),onHome=true,openEvidence=false;
+const $=id=>document.getElementById(id);
+const sound=new SoundEngine();
+const music=new CyberpunkMusicEngine(sound);
+const clamp=(v)=>Math.max(0,Math.min(6,v));
+const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+function readJson(key){try{return JSON.parse(localStorage.getItem(key)||'null')}catch(_){return null}}
+function writeJson(key,v){try{localStorage.setItem(key,JSON.stringify(v))}catch(_){}}
+function store(){writeJson(KEY,state)}
+function saveEnding(id){let endings=readJson(ENDKEY)||[];if(!endings.includes(id)){endings.push(id);writeJson(ENDKEY,endings)}}
+function load(){let s=readJson(KEY);if(s&&typeof s==='object'&&typeof s.scene==='string'&&Array.isArray(s.clues)&&Array.isArray(s.history)){state={...init(),...s,clues:s.clues.filter(k=>REGIONS[k]),lenses:Array.isArray(s.lenses)?s.lenses:[],flags:Array.isArray(s.flags)?s.flags:[]};return true}return false}
+load();
+const o=(label,desc,to,effects={})=>({label,desc,to,effects});
+function flag(f){return state.flags.includes(f)}
+function addFlag(f){if(!flag(f))state.flags.push(f)}
+function has(k){return state.clues.includes(k)}
+function countChapter(ch){return Object.values(REGIONS).filter(x=>x.ch===ch).length}
+function foundChapter(ch){return Object.keys(REGIONS).filter(k=>REGIONS[k].ch===ch&&has(k)).length}
+function chapterTitle(ch){return `${String(ch).padStart(2,'0')} · ${CHAPTERS[ch]}`}
+function bonus(lens,clueKeys){return clueKeys.filter(has).length>=2}
+function transition(scene,msg){state.scene=scene;state.lastResult=msg||'';state.chapter=Number(scene.slice(1,2))||state.chapter}
+function applyEffects(e){for(const[k,v]of Object.entries(e||{})){
+ if(k==='clue'){if(REGIONS[v]&&!has(v))state.clues.push(v)}
+ else if(k==='lens'){if(LENSES[v]){if(!state.lenses.includes(v))state.lenses.push(v);addFlag('lens_'+v)}}
+ else if(k==='flag'){addFlag(v)}
+ else if(k==='theory'){state.theory=v}
+ else if(['trust','clarity','pressure'].includes(k))state[k]=clamp(state[k]+v);
+}}
+function resolveFinal(choice){let c=state.clues.length, good=state.clarity>=3, trust=state.trust>=4;
+ if(choice==='algorithm')return state.pressure>=3?'overload':'falsegreen';
+ if(choice==='blackout')return 'blackout';
+ if(choice==='sequel')return 'sequel';
+ if(choice==='privacy')return 'guardian';
+ if(choice==='expose'){if(flag('city')&&flag('logs')&&c>=7)return 'ghost';return flag('logs')&&c>=6?'exposed':'silenced'}
+ if(choice==='patient')return trust?'patient':'partial';
+ if(choice==='local')return 'local';
+ if(choice==='synthesis'){
+   if(state.theory==='fascial'&&bonus(null,['shoulder','thorax','cervical']))return 'upper';
+   if(state.theory==='network'&&c>=8&&good&&trust&&state.lenses.length>=3)return 'resonance';
+   if((state.theory==='network'||state.theory==='fascial')&&c>=6&&state.clarity>=2)return 'bridge';
+   return 'partial';
+ }
+ return 'partial';
+}
+function choose(idx){const scene=getScene(), c=scene.options[idx];if(!c)return;
+ state.history.push({scene:state.scene,label:c.label});if(state.history.length>130)state.history.shift();
+ applyEffects(c.effects);
+ if(c.to.startsWith('end:')){let end=resolveFinal(c.to.slice(4));state.ended=end;state.scene='end_'+end;saveEnding(end);music.setMode('victory');music.stinger()}
+ else {transition(c.to, c.effects.message||'');music.setMode(['c6_board','c7_board','c8_verdict'].includes(c.to)?'challenge':'explore')}
+ store();render();window.scrollTo({top:0,behavior:'instant'});sound.playPulseSound();
+}
+function regionOptions(ch){return Object.entries(REGIONS).filter(([_,d])=>d.ch===ch).map(([k,d])=>
+ has(k)?null:o(`Examinar ${d.name}`,`${d.tag} · Descubre una pista anatómica`, `inspect_${k}`,{clue:k,clarity:1})).filter(Boolean)
+}
+function sceneObj(ch,title,body,options,extra={}){return{ch,title,body,options,speaker:extra.speaker||'UNIDAD DE INVESTIGACIÓN HOLOS',focus:extra.focus||'all',question:extra.question||'¿QUÉ DECIDES?',kind:extra.kind||'scene'}}
+function inspectScene(k){let d=REGIONS[k];return sceneObj(d.ch,'REGISTRO ANATÓMICO: '+d.name.toUpperCase(),d.finding+'\n\nNUEVA CONEXIÓN: '+d.link,[o('Guardar la pista y continuar',`Volver a la investigación del capítulo ${d.ch}`,`c${d.ch}_hub`)],{focus:d.focus,speaker:'ESCÁNER HOLOS · '+d.tag,question:'PISTA GUARDADA EN TU CUADERNO'})}
+function getScene(){let s=state, n=s.clues.length, sc=s.scene;
+ if(sc.startsWith('inspect_')&&REGIONS[sc.slice(8)])return inspectScene(sc.slice(8));
+ if(sc.startsWith('end_')&&ENDINGS[sc.slice(4)]){let e=ENDINGS[sc.slice(4)];return sceneObj(8,'FINAL: '+e.label,e.text,[],{kind:'end',speaker:e.kind,focus:'all'})}
+ switch(sc){
+  case 'call':return sceneObj(1,'La llamada de NORA','Año 2149. La lluvia golpea los cristales del Distrito HOLOS. NORA-17 llega con tensión cervical, sueño alterado y una respiración que siente incompleta.\n\nLa IA municipal ofrece un diagnóstico instantáneo, pero la señal no encaja con lo que cuenta. Eres detective biomecánico y dispones de cuatro lentes: pélvica, respiratoria, cervical y craneal.',[
+  o('Escuchar primero a NORA','Su relato puede revelar lo que el escáner omite','c1_listen',{trust:2,flag:'listen'}),
+  o('Analizar su mapa de movimiento','Buscar indicios fuera de la zona dolorosa','c1_archive',{clarity:1,flag:'movement'}),
+  o('Aceptar el informe automático','Una decisión rápida, con menos información','c1_auto',{pressure:2,flag:'auto'})],{speaker:'CASO 017 · DISTRITO NEÓN',focus:'all',question:'TU PRIMERA DECISIÓN COMO DETECTIVE'});
+  case 'c1_listen':return sceneObj(1,'Una frase fuera del expediente','«Empezó después de un cambio de trabajo. Camino mucho y siento que ya no apoyo igual».\n\nNORA no te da una solución. Te entrega una dirección: empezar por aquello que nadie había explorado.',[o('Seguir las huellas','Investigar el miembro inferior y la pelvis','c2_hub')],{speaker:'NORA-17',focus:'pelvis'});
+  case 'c1_archive':return sceneObj(1,'La huella que nadie vio','Una grabación del metro muestra un cambio de apoyo al caminar. El sistema había marcado exclusivamente el cuello.\n\nEl patrón necesita más observaciones antes de atribuirle un significado.',[o('Abrir expediente de marcha','Investigar el miembro inferior y la pelvis','c2_hub')],{focus:'foot'});
+  case 'c1_auto':return sceneObj(1,'El diagnóstico perfecto','«Origen cervical aislado. No requiere más investigación».\n\nEn el monitor, sin embargo, aparece una huella irregular. ¿Un error del algoritmo o una pista importante?',[
+  o('Investigar a pesar del protocolo','Contrastar la huella y las relaciones','c2_hub',{clarity:1}),
+  o('Guardar el informe y seguir','Conservar la sospecha de un sesgo','c2_hub',{pressure:1,flag:'auto2'})],{focus:'cervical'});
+  case 'c2_hub':{
+    let found=foundChapter(2);return sceneObj(2,'Huellas en el neón',`NORA cruza la plataforma de marcha holográfica. Has registrado ${found}/4 regiones de este sector.\n\nCada zona revela una parte distinta. Busca al menos dos pistas antes de decidir qué lente HOLOS utilizar.`,[
+      ...regionOptions(2),...(found>=2?[o('Relacionar las pistas del apoyo','Elegir una lente y pasar al siguiente capítulo','c2_link')]:[])],{focus:'foot',speaker:'LABORATORIO DE MARCHA · SECTOR INFERIOR',question:found>=2?'¿INVESTIGAS MÁS O CONECTAS LOS HALLAZGOS?':'SELECCIONA UNA REGIÓN PARA INVESTIGAR'})}
+  case 'c2_link':return sceneObj(2,'El primer mapa','El apoyo, la rodilla y la pelvis no son piezas independientes, pero tampoco todas las señales tienen la misma importancia.\n\n¿Qué lente emplearás para formular tu primera hipótesis?',[
+  o('Lente pélvica','Relacionar apoyo, cadera y coordinación pélvica','c3_hub',{lens:'pelvic',clarity:bonus(null,['pelvis','hip','foot'])?1:0}),
+  o('Lente cervical','Contrastar el apoyo con el síntoma de cuello','c3_hub',{lens:'cervical',clarity:has('cervical')?1:0}),
+  o('El pie explica todo','Cerrar demasiado pronto una hipótesis local','c3_hub',{pressure:2,flag:'footonly'})],{focus:'pelvis',question:'ELIGE UNA RELACIÓN PARA SEGUIR'});
+  case 'c3_hub':{
+    let found=foundChapter(3);return sceneObj(3,'La cámara de presión',`Una sala de respiración proyecta tres señales sobre el tórax. Has registrado ${found}/3 zonas de este sector.\n\nBusca al menos dos hallazgos y compara lo que cambia durante el ciclo respiratorio.`,[
+     ...regionOptions(3),...(found>=2?[o('Contrastar las señales','Elegir una estrategia de observación','c3_link')]:[])],{focus:'resp',speaker:'LABORATORIO TORACOABDOMINAL',question:found>=2?'¿QUÉ RELACIÓN INVESTIGAS?':'¿QUÉ QUIERES EXPLORAR?'})}
+  case 'c3_link':return sceneObj(3,'Las dos ondas','El ciclo respiratorio modifica simultáneamente distintas señales. No puedes deducir causalidad solo por ver dos ondas moverse juntas.',[
+  o('Comparar respiratorio y pélvico','Buscar coordinación sin imponer un ritmo','c4_hub',{lens:'respiratory',clarity:bonus(null,['resp','pelvis'])?2:1,flag:'coordination'}),
+  o('Ampliar la exploración del tórax','Seguir una ruta costal y cervicotorácica','c4_hub',{lens:'cervical',clarity:has('thorax')?2:0,flag:'thoracic_route'}),
+  o('Forzar la calibración de presión','Ganar tiempo a costa de incertidumbre','c4_hub',{pressure:2,flag:'forced'})],{focus:'resp',speaker:'CENTRAL DE PRESIONES',question:'¿CUÁL ES TU SIGUIENTE HIPÓTESIS?'});
+  case 'c4_hub':{
+    let found=foundChapter(4);return sceneObj(4,'El circuito superior',`La investigación asciende al hombro, el miembro superior y la entrada torácica. Has registrado ${found}/3 zonas.\n\nInvestiga al menos dos antes de relacionar las señales. Una de ellas puede no pertenecer al mismo patrón.`,[
+     ...regionOptions(4),...(found>=2?[o('Examinar las conexiones del circuito','Contrastar hallazgos locales y globales','c4_link')]:[])],{focus:'shoulder',speaker:'UNIDAD DE MOVIMIENTO SUPERIOR',question:'¿QUÉ REGIÓN EXAMINAS?'})}
+  case 'c4_link':return sceneObj(4,'La pista que distrae','NORA usa la mano a diario, pero su tensión cervical también fluctúa con la respiración.\n\nUn detective debe distinguir lo que está relacionado de lo que simplemente ocurre al mismo tiempo.',[
+  o('Relacionar tórax, hombro y cuello','Contrastar una posible cadena funcional','c5_hub',{lens:'cervical',clarity:bonus(null,['shoulder','cervical','thorax'])?2:1,flag:'upperchain'}),
+  o('Investigar el brazo como problema separado','Una hipótesis local que requiere pruebas propias','c5_hub',{clarity:has('wrist')?1:0,flag:'separate_arm'}),
+  o('Atribuir todo al uso del terminal','Ignorar las contradicciones de otras regiones','c5_hub',{pressure:2,flag:'wristonly'})],{focus:'cervical'});
+  case 'c5_hub':{
+    let found=foundChapter(5);return sceneObj(5,'El guardián',`En el observatorio craneocervical te esperan dos señales: la mandíbula y la base del cráneo. Has registrado ${found}/2 zonas.\n\nLa tensión que se siente en una región puede acompañar a otras respuestas. Necesitas al menos una pista antes de seguir.`,[
+     ...regionOptions(5),...(found>=1?[o('Reconstruir la secuencia craneocervical','Decidir cómo interpretar el patrón','c5_link')]:[])],{focus:'cran',speaker:'OBSERVATORIO SUBOCCIPITAL',question:'¿QUÉ PISTA VAS A BUSCAR?'})}
+  case 'c5_link':return sceneObj(5,'El cuarto diafragma','La señal de la base craneal cambia cuando el cuello modifica su estado. La mandíbula añade otra capa a la historia de NORA.\n\nElige qué priorizarás al analizar las relaciones.',[
+  o('Comparar base craneal y cuello','Usar la cuarta lente y contrastar una secuencia','c6_board',{lens:'cranial',clarity:bonus(null,['cran','cervical'])?2:1,flag:'craniocervical'}),
+  o('Escuchar la historia de la mandíbula','Buscar información sobre estrés, sueño y contexto','c6_board',{trust:2,clarity:has('jaw')?1:0,flag:'jaw_story'}),
+  o('Fijar una causa única en el cráneo','Ignorar la variación entre regiones','c6_board',{pressure:2,flag:'cranonly'})],{focus:'cran'});
+  case 'c6_board':return sceneObj(6,'El tablero invisible',`Tienes ${n}/12 pistas anatómicas, ${s.lenses.length} elecciones de lentes y un nivel de confianza ${s.trust}/6.\n\nLas pistas no forman una cadena causal demostrada. Son señales simuladas que pueden apoyar o contradecir hipótesis. NORA pregunta: «¿Qué crees que está pasando?».`,[
+  o('Una red de adaptaciones funcionales','Relacionar varios sectores sin afirmar un origen único','c6_network',{theory:'network',clarity:n>=7?2:0}),
+  o('Una cadena de movimiento superior','Priorizar tórax, hombro y cuello','c6_fascial',{theory:'fascial',clarity:bonus(null,['thorax','shoulder','cervical'])?2:0}),
+  o('Un problema estrictamente local','Reducir la explicación al síntoma del cuello','c6_local',{theory:'local',pressure:2}),
+  o('El algoritmo tiene la respuesta','Confiar en la clasificación municipal','c6_auto',{theory:'auto',pressure:2})],{speaker:'SALA DE HIPÓTESIS / CUATRO LENTES',focus:'all',question:'ELIGE TU TEORÍA PRINCIPAL'});
+  case 'c6_network':return sceneObj(6,'Una teoría prudente','Presentas las conexiones como posibilidades contrastables. NORA asiente: «Por fin alguien me pregunta qué cambia cuando me muevo».\n\nPero el panel muestra una alerta: varios registros han sido filtrados.',[o('Investigar la alerta de la ciudad','Avanzar al conflicto principal','c7_hub')],{focus:'all'});
+  case 'c6_fascial':return sceneObj(6,'El mapa de movimiento','Tu hipótesis hace visibles conexiones entre costillas, cintura escapular y cuello. Puede resultar útil, pero no explica por sí sola todos los síntomas.\n\nUna señal de acceso no autorizado interrumpe el escáner.',[o('Seguir el origen del mensaje','Buscar qué oculta el sistema','c7_hub')],{focus:'shoulder'});
+  case 'c6_local':return sceneObj(6,'Una imagen demasiado pequeña','El sistema resalta el cuello. NORA mueve el tórax: la lectura cambia. Tu explicación queda bajo sospecha.\n\nEn el servidor aparecen registros ocultos.',[o('Comprobar los registros','Todavía puedes rectificar','c7_hub')],{focus:'cervical'});
+  case 'c6_auto':return sceneObj(6,'El protocolo ECO','La IA municipal te ofrece cuatro luces verdes y una etiqueta de «resuelto». NORA dice que sigue notando molestias.\n\nLa pantalla ha cambiado; el relato no. Es el momento de investigar.',[o('Buscar el código del protocolo ECO','Confrontar la automatización','c7_hub')],{focus:'all'});
+  case 'c7_hub':{
+   let nInvest=['patient','logs','city'].filter(flag).length;
+   return sceneObj(7,'La ciudad miente',`El protocolo ECO ha ocultado parte del expediente de NORA. Has recuperado ${nInvest}/3 fuentes adicionales.\n\nPuedes hablar con personas, examinar registros o consultar a un testigo. Una fuente basta para seguir, pero cada una puede cambiar el desenlace.`,[
+      ...(!flag('patient')?[o('Volver a hablar con NORA','Contrastar tu teoría con su experiencia','c7_patient',{flag:'patient',trust:2,clarity:1})]:[]),
+      ...(!flag('logs')?[o('Entrar en el servidor del protocolo ECO','Analizar los registros y su procedencia','c7_logs',{flag:'logs',clarity:1})]:[]),
+      ...(!flag('city')?[o('Buscar al testigo del distrito','Un técnico vio los registros originales','c7_city',{flag:'city',clarity:1})]:[]),
+      ...(nInvest>=1?[o('Preparar el veredicto','Concluir la investigación con lo reunido','c8_verdict')]:[])],{speaker:'DISTRITO NEÓN · ARCHIVOS BAJO SOSPECHA',question:'¿A QUIÉN O QUÉ INVESTIGAS?'})}
+  case 'c7_patient':return sceneObj(7,'La voz que faltaba','NORA revisa las pistas. «La peor noche fue después de que cambiara mi rutina. El cuello no siempre fue lo primero».\n\nLa entrevista amplía el contexto, pero no determina automáticamente la causa. La confianza crece.',[o('Anotar y continuar','Volver a las fuentes disponibles','c7_hub')],{speaker:'NORA-17',focus:'jaw'});
+  case 'c7_logs':return sceneObj(7,'Código fantasma','Recuperas un log del protocolo ECO: se priorizaban solo las señales con mayor intensidad en pantalla. Los cambios temporales entre regiones no se mostraban.\n\nLa manipulación de datos es verificable; la interpretación clínica todavía necesita prudencia.',[o('Conservar copia de los registros','Volver a las fuentes disponibles','c7_hub')],{speaker:'SERVIDOR MUNICIPAL / LOGS',focus:'all'});
+  case 'c7_city':return sceneObj(7,'El testigo de la azotea','Un ingeniero dice haber visto cómo el algoritmo omitía exploraciones completas si no coincidían con su primera clasificación. Te entrega una clave incompleta.\n\nSu relato puede servir como pista, pero necesitará contrastarse.',[o('Registrar el testimonio','Volver a las fuentes disponibles','c7_hub')],{speaker:'TESTIGO ANÓNIMO',focus:'foot'});
+  case 'c8_verdict':return sceneObj(8,'El veredicto',`Has reunido ${n}/12 pistas y ${s.lenses.length} claves HOLOS. Tu teoría: ${s.theory==='network'?'red de adaptaciones':s.theory==='fascial'?'cadena superior':s.theory==='local'?'hipótesis local':'informe automático'}.\n\nEl distrito espera tu conclusión. NORA también. Aquí no existe un botón universal: tu decisión final determinará qué historia se cuenta y qué queda sin resolver.`,[
+     o('Presentar un mapa global razonado','Cerrar con una hipótesis revisable y sus límites','end:synthesis'),
+     o('Publicar los fallos del protocolo ECO','Revelar la investigación a toda la ciudad','end:expose'),
+     o('Escuchar y proteger a NORA','Priorizar la colaboración con la paciente','end:patient'),
+     o('Proteger los datos del expediente','Un final ético incluso sin una solución completa','end:privacy'),
+     o('Aplicar el cierre automático','Cuatro luces verdes, sin preguntas adicionales','end:algorithm'),
+     o('Cerrar solo el problema cervical','Preferir una explicación local','end:local'),
+     o('Desconectar la red municipal','Eliminar ECO sin conservar el mapa operativo','end:blackout'),
+     o('Negarte a cerrar el caso','Seguir hacia el siguiente expediente de la saga','end:sequel')],{speaker:'COMISARÍA HOLOS · PROTOCOLO FINAL',focus:'all',question:'¿QUÉ DECIDE EL DETECTIVE?'});
+  default:return sceneObj(1,'Señal interrumpida','El expediente se ha reiniciado de forma segura.',[o('Volver al caso inicial','Reiniciar la investigación','call')]);
+ }
+}
+function art(focus='all'){
+ const positions={foot:[274,247],knee:[252,206],hip:[255,159],pelvis:[260,168],abdomen:[260,135],resp:[260,112],thorax:[260,87],shoulder:[214,79],wrist:[180,145],cervical:[260,64],jaw:[274,37],cran:[260,22],all:[260,112]};
+ let [x,y]=positions[focus]||positions.all;
+ const marks=[['P',260,168,'#ff739d'],['R',260,112,'#3cf3de'],['C',260,64,'#68cfff'],['K',260,22,'#ef8bff']].map(([t,cx,cy,color])=>`<g><circle cx="${cx}" cy="${cy}" r="13" fill="none" stroke="${color}" stroke-opacity=".72" class="pulse"/><circle cx="${cx}" cy="${cy}" r="3.7" fill="${color}"/><text x="${cx+18}" y="${cy+3}" fill="${color}" font-size="9" font-weight="800">${t}</text></g>`).join('');
+ return `<div class="art" aria-hidden="true"><svg viewBox="0 0 520 265" preserveAspectRatio="xMidYMid meet"><defs><radialGradient id="glow"><stop stop-color="#22577b" stop-opacity=".65"/><stop offset="1" stop-color="#07101b" stop-opacity="0"/></radialGradient></defs>
+ <g opacity=".25" stroke="#5ec4f0" fill="none"><path d="M0 230V110h25V75h27v68h19V98h33v43h30V65h28v110M355 110V83h22V105h18V40h32v62h20V72h32V94h25v136"/><path d="M0 230H520M0 244H520"/></g><ellipse cx="260" cy="130" rx="145" ry="140" fill="url(#glow)"/>
+ <g fill="none" stroke="#4897c0" opacity=".45"><circle cx="260" cy="126" r="100"/><circle cx="260" cy="126" r="128" stroke-dasharray="5 8"/><path d="M260 0V265M130 130H390" stroke-dasharray="2 8"/></g>
+ <g stroke="#8ee5fb" stroke-width="1.5" fill="#123348" fill-opacity=".63"><ellipse cx="260" cy="29" rx="17" ry="23"/><path d="M251 51L248 65 227 68Q216 78 212 88L184 143 194 149 231 107 225 153 245 172 249 244 262 246 264 179 273 179 283 245 296 244 285 171 302 153 292 107 326 149 336 143 308 88Q304 78 291 68L272 65 269 51Z"/></g>
+ <g fill="none" stroke="#6ab0da" stroke-width="1.4" opacity=".7"><path d="M260 51V176M239 82Q260 74 282 82M231 93Q260 86 289 93M230 104Q260 96 290 104M234 116Q260 109 286 116M244 157Q260 174 283 157"/><path d="M245 244L234 251M283 245L302 251" stroke-width="4"/></g>
+ <path d="M235 117Q260 97 286 117M245 165Q260 177 282 165" fill="none" stroke="#46e8dc" stroke-width="2.5" opacity=".65"/>
+ <path d="M260 22V168" stroke="#ff59df" stroke-width="1.6" stroke-dasharray="4 6" opacity=".64"/>${marks}
+ <g filter="drop-shadow(0 0 8px #ff5ad6)"><circle cx="${x}" cy="${y}" r="19" fill="#f548c3" fill-opacity=".13" stroke="#ff79e7" stroke-width="1.5" class="pulse"/><circle cx="${x}" cy="${y}" r="5" fill="#fff2ff"/></g><path d="M${x+20} ${y}H${Math.min(409,x+93)}" stroke="#ff79e7" stroke-dasharray="4 3"/><text x="${Math.min(414,x+97)}" y="${Math.max(10,y-5)}" font-size="9" fill="#ffb6ef">SCAN</text>
+ <line class="scanray" x1="125" y1="110" x2="390" y2="110" stroke="#6deafa" stroke-width="1.2" opacity=".22"/></svg></div>`
+}
+function historyMarkup(){return state.history.length?state.history.slice(-8).map((h,i)=>`<div class="drawer-item">${esc(h.label)}</div>`).join(''):'<p class="empty">Aún no hay decisiones.</p>'}
+function render(){let root=$('screen');
+ if(onHome){const completed=(readJson(ENDKEY)||[]).length;root.innerHTML=`<section class="intro"><div class="micro">TEMPORADA I / EXPEDIENTES DEL DISTRITO NEÓN</div><h1 class="hero-title">NEON<br><span>CHRONICLES</span></h1><p class="subhead">THE FOUR DIAPHRAGMS · MÉTODO HOLOS</p><button class="primary" id="play">${state.history.length?'CONTINUAR INVESTIGACIÓN →':'ACEPTAR EL CASO 017 →'}</button><div class="frame" style="margin-top:14px">${art('all')}</div><div class="callout"><strong>Distrito HOLOS · Año 2149.</strong><br>Eres un detective biomecánico. Tienes cuatro lentes para leer el cuerpo, doce regiones que investigar y una ciudad que no cuenta toda la verdad.</div><div class="season-stats"><div><strong>8</strong><small>CAPÍTULOS</small></div><div><strong>12</strong><small>REGIONES</small></div><div><strong>${completed}/${END_COUNT}</strong><small>FINALES HALLADOS</small></div></div>${state.history.length?'<button class="tool" id="newgame" style="width:100%;margin-top:13px">↻ Comenzar una nueva investigación</button>':''}<p class="underbtn"><strong>Jugar es sencillo:</strong> lees la escena, tomas una decisión y descubres sus consecuencias. Las pistas se guardan en tu cuaderno.</p></section>`;
+ $('play').addEventListener('click',()=>{onHome=false;render();window.scrollTo(0,0)});
+ if($('newgame'))$('newgame').addEventListener('click',()=>{if(confirm('¿Empezar otra investigación? Se sustituirá la partida actual, pero conservarás los finales descubiertos.')){state=init();store();onHome=false;render();window.scrollTo(0,0)}});
+ return;}
+ const scene=getScene(),ending=scene.kind==='end',chapter=scene.ch,found=(readJson(ENDKEY)||[]).length;
+ const choices=ending?`<button class="choice" id="restart"><span class="index">↻</span><span><strong>Iniciar una nueva investigación</strong><small>Vuelve a explorar otras rutas. Tus finales descubiertos se conservan.</small></span><span class="chev">›</span></button><button class="choice" id="menu"><span class="index">⌂</span><span><strong>Volver al menú</strong><small>Explora la colección de finales.</small></span><span class="chev">›</span></button>`:scene.options.map((item,i)=>`<button class="choice" data-choice="${i}"><span class="index">${i+1}</span><span><strong>${esc(item.label)}</strong><small>${esc(item.desc)}</small></span><span class="chev">›</span></button>`).join('');
+ let title=CHAPTERS[chapter],progress=ending?100:Math.min(98,Math.round((chapter-1+0.45)/8*100));
+ root.innerHTML=`<div class="progress"><span class="chapter">CAPÍTULO ${String(chapter).padStart(2,'0')} / 08 · ${esc(title)}</span><span class="tracker">${ending?'FIN INVESTIGACIÓN':`PISTAS ${state.clues.length}/12`}</span></div><div class="progress-track"><div class="progress-inner" style="width:${progress}%"></div></div><div class="detective-strip"><span>◈ DETECTIVE HOLOS</span><span>4 LENTES · ${state.lenses.length} UTILIZADAS</span><span>FINALES ${found}/${END_COUNT}</span></div><div class="story-layout"><div class="frame">${art(scene.focus)}</div><div class="frame"><article class="scene"><div class="scene-head"><span class="episode">CASO 017 / NEON CHRONICLES</span><span class="scene-num">${ending?'EXPEDIENTE CERRADO':`DECISIÓN ${state.history.length+1}`}</span></div><h2>${esc(scene.title)}</h2><p class="speaker">${esc(scene.speaker)}</p><p class="narrative">${esc(scene.body)}</p>${state.lastResult&&!ending?`<p class="reaction">↳ ${esc(state.lastResult)}</p>`:''}${ending?`<div class="epilogue"><strong>${esc(ENDINGS[state.ended].kind)}</strong><p>Has descubierto ${found} de ${END_COUNT} desenlaces. Algunas decisiones pueden cambiar por completo el destino del expediente.</p></div><div class="result-stats"><div class="result-stat"><strong>${state.clues.length}/12</strong><small>REGIONES</small></div><div class="result-stat"><strong>${state.trust}/6</strong><small>CONFIANZA</small></div><div class="result-stat"><strong>${state.lenses.length}/4</strong><small>LENTES USADAS*</small></div></div>`:`<p class="prompt">${esc(scene.question)}</p>`}</article><div class="choices">${choices}</div></div></div><div class="floating-notes"><span class="hint">${ending?'Una decisión diferente puede revelar otro final.':'No hay una única ruta: investiga, relaciona y decide.'}</span><button class="evidence-btn" id="evidence" aria-expanded="${openEvidence}">☷ CUADERNO (${state.clues.length})</button></div><section class="drawer ${openEvidence?'open':''}" id="evidence-panel"><h3>MAPA DE LAS CUATRO LENTES</h3><div class="lens-grid">${Object.entries(LENSES).map(([k,v])=>`<div class="lens ${state.lenses.includes(k)?'used':''}"><strong>${esc(v.name)}</strong><small>${esc(v.description)}</small></div>`).join('')}</div><h3 style="margin-top:13px">PISTAS ANATÓMICAS (${state.clues.length}/12)</h3>${state.clues.length?state.clues.map(k=>`<div class="drawer-item"><strong>${esc(REGIONS[k].name)}:</strong> ${esc(REGIONS[k].finding)}</div>`).join(''):'<p class="empty">Explora regiones para registrar hallazgos.</p>'}<h3 style="margin-top:14px">ÚLTIMAS DECISIONES</h3>${historyMarkup()}<p class="record">*Modelo narrativo de ficción inspirado en relaciones osteopáticas. Los hallazgos no son diagnósticos ni pruebas de causalidad clínica.</p></section>`;
+ root.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>choose(Number(b.dataset.choice))));
+ if($('evidence'))$('evidence').addEventListener('click',()=>{openEvidence=!openEvidence;$('evidence-panel').classList.toggle('open',openEvidence);$('evidence').setAttribute('aria-expanded',String(openEvidence))});
+ if($('restart'))$('restart').addEventListener('click',()=>{state=init();store();openEvidence=false;music.setMode('explore');render();window.scrollTo(0,0)});
+ if($('menu'))$('menu').addEventListener('click',()=>{onHome=true;music.setMode('menu');render();window.scrollTo(0,0)});
+}
+function initInterface(){music.setMode('menu');$('sound-btn').addEventListener('click',()=>{let on=music.toggle();sound.enabled=on;$('sound-btn').textContent=on?'♫ ON':'♫ OFF';$('sound-btn').classList.toggle('active',on);$('sound-btn').setAttribute('aria-pressed',String(on))});$('music-volume').value=String(music.volume);$('music-vol-label').textContent=music.volume+'%';$('music-volume').addEventListener('input',e=>{music.setVolume(e.target.value);$('music-vol-label').textContent=music.volume+'%'});$('help-btn').addEventListener('click',()=>{$('help-modal').hidden=false});$('close-help').addEventListener('click',()=>{$('help-modal').hidden=true});$('help-modal').addEventListener('click',e=>{if(e.target===$('help-modal'))$('help-modal').hidden=true});$('home-btn').addEventListener('click',()=>{onHome=true;music.setMode('menu');render();window.scrollTo(0,0)});document.addEventListener('keydown',e=>{if(e.key==='Escape')$('help-modal').hidden=true;if(!onHome&&!getScene().kind.includes('end')&&!e.ctrlKey&&!e.altKey){let i=Number(e.key)-1;if(i>=0&&i<getScene().options.length)choose(i)}});document.addEventListener('visibilitychange',()=>{if(document.hidden&&music.ctx)music.ctx.suspend().catch(()=>{});else if(music.enabled&&music.ctx)music.ctx.resume().catch(()=>{})});render()}
+initInterface();
+
+</script></body></html>
