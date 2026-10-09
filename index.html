@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#080913"/>
-<title>NEON CHRONICLES — Los detectives HOLOS | Temporada I</title>
+<title>NEON CHRONICLES — Los detectives HOLOS | Temporada I · Audio FIX</title>
 <style>
 :root {color-scheme:dark;--bg:#070a12;--panel:#0e1423;--panel2:#141c2e;--cyan:#4aebed;--magenta:#ff4fca;--violet:#9e86ff;--gold:#ffd089;--txt:#eef4ff;--mute:#a0b2cb;--line:rgba(96,227,255,.20)}
 *,*::before,*::after{box-sizing:border-box}
@@ -51,6 +51,14 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .lens small{display:block;font-size:10px;color:var(--mute);line-height:1.45;margin-top:3px}
 @media(max-width:390px){.detective-strip{font-size:8px;gap:5px}.art{height:160px}.scene h2{font-size:22px}.scene{padding-top:12px}.intro .art{height:174px}.lens-grid{grid-template-columns:1fr}}
 @media(min-width:720px){.story-layout>.frame:first-child{position:sticky;top:16px}.story-layout>.frame:first-child .art{height:350px}}
+/* Música visible y accesible en móviles */
+.audio-strip{margin:9px 0 4px;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 12px;border:1px solid rgba(74,235,237,.2);border-radius:10px;background:rgba(13,24,41,.78)}
+.audio-status{font-size:11px;line-height:1.35;color:#c6d5e9;flex:1;min-width:0}
+.audio-status.active{color:var(--cyan)}.audio-volume{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mute);white-space:nowrap}
+.audio-volume input{width:80px;accent-color:var(--cyan)}
+.music-cta{display:block;width:100%;min-height:44px;margin-top:9px;border:1px solid rgba(74,235,237,.47);border-radius:10px;background:rgba(20,57,72,.63);color:var(--cyan);font-size:12px;font-weight:850;letter-spacing:.7px}
+.music-cta.active{background:rgba(74,235,237,.10)}
+@media(max-width:350px){.audio-strip{padding:8px;gap:6px}.audio-volume input{width:54px}.audio-status{font-size:10px}}
 </style>
 </head>
 <body>
@@ -59,10 +67,11 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
     <div class="wordmark"><div class="logo" aria-hidden="true">H</div><div><strong>THE FOUR DIAPHRAGMS</strong><small>NEON CHRONICLES / HOLOS</small></div></div>
     <div class="tools"><button class="tool" id="sound-btn" aria-pressed="false" title="Activar música cyberpunk">♫ OFF</button><button class="tool" id="help-btn" title="Cómo jugar">?</button><button class="tool" id="home-btn" title="Volver al menú">⌂</button></div>
   </header>
+  <div class="audio-strip"><span id="audio-status" class="audio-status" role="status" aria-live="polite">Banda sonora desactivada · pulsa ♫ OFF</span><label class="audio-volume" for="music-volume">VOL <input type="range" id="music-volume" min="0" max="100" value="65" aria-label="Volumen de la música"><span id="music-vol-label">65%</span></label></div>
   <main id="screen" aria-live="polite"></main>
   <div class="footer"><strong>MÉTODO HOLOS</strong> · Temporada I · Ficción interactiva. Las relaciones son un modelo pedagógico, no diagnóstico ni tratamiento.</div>
 </div>
-<div class="overlay" id="help-modal" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><div class="modal"><div class="micro">PROTOCOLO DE INICIO</div><h2 id="help-title">¿Cómo se juega?</h2><p><strong>Eres detective biomecánico.</strong> Lee cada escena y elige tu acción. Las pistas anatómicas que descubras se guardan en el cuaderno del detective y afectarán a las decisiones posteriores.</p><p><strong>Tus cuatro herramientas son las lentes pélvica, respiratoria, cervical y craneal.</strong> Investigarás doce regiones en ocho capítulos, construirás hipótesis y decidirás cómo termina el caso. Puedes repetir para hallar desenlaces alternativos.</p><p>La música es opcional: se activa tocando ♫ OFF. Tu historia se guarda en este dispositivo cuando el navegador permite almacenamiento local.</p><label class="volwrap">VOLUMEN <input type="range" id="music-volume" min="0" max="100" value="38" aria-label="Volumen de la banda sonora"><span id="music-vol-label">38%</span></label><button class="primary" id="close-help" style="margin-top:16px">ENTENDIDO · JUGAR →</button></div></div>
+<div class="overlay" id="help-modal" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><div class="modal"><div class="micro">PROTOCOLO DE INICIO</div><h2 id="help-title">¿Cómo se juega?</h2><p><strong>Eres detective biomecánico.</strong> Lee cada escena y elige tu acción. Las pistas anatómicas que descubras se guardan en el cuaderno del detective y afectarán a las decisiones posteriores.</p><p><strong>Tus cuatro herramientas son las lentes pélvica, respiratoria, cervical y craneal.</strong> Investigarás doce regiones en ocho capítulos, construirás hipótesis y decidirás cómo termina el caso. Puedes repetir para hallar desenlaces alternativos.</p><p>La música es opcional: toca <strong>♫ OFF</strong> en la barra superior o <strong>ACTIVAR MÚSICA</strong> en la portada para escucharla. Ajusta el volumen junto al título, y comprueba que el teléfono no esté silenciado. Tu historia se guarda en este dispositivo cuando el navegador permite almacenamiento local.</p><button class="primary" id="close-help" style="margin-top:16px">ENTENDIDO · JUGAR →</button></div></div>
 <script>
 class SoundEngine {
             constructor() {
@@ -146,7 +155,7 @@ class CyberpunkMusicEngine {
                 this.filter = null;
                 this.timer = null;
                 this.enabled = false;
-                this.volume = 38;
+                this.volume = 65;
                 this.mode = 'menu';
                 this.step = 0;
                 this.nextTime = 0;
@@ -180,21 +189,35 @@ class CyberpunkMusicEngine {
                 }
                 return true;
             }
-            start() {
-                if (this.enabled) return true;
-                if (!this.init()) return false;
-                this.enabled = true;
-                // This is called only from a player tap, respecting mobile autoplay restrictions.
-                if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
-                this.step = 0;
-                this.nextTime = this.ctx.currentTime + 0.065;
-                const now = this.ctx.currentTime;
-                this.bus.gain.cancelScheduledValues(now);
-                this.bus.gain.setValueAtTime(this.bus.gain.value, now);
-                this.bus.gain.setTargetAtTime(this.volume / 100 * 0.44, now, 0.15);
-                this.timer = setInterval(() => this.schedule(), 85);
-                this.schedule();
-                return true;
+            async start() {
+                if (this.enabled && this.ctx?.state === 'running') return true;
+                try {
+                    if (!this.init()) return false;
+                    // El gesto explícito del jugador desbloquea Web Audio en Safari/Chrome móvil.
+                    // Crear el oscilador de desbloqueo ANTES de esperar resume().
+                    const unlock = this.ctx.createOscillator();
+                    const silent = this.ctx.createGain();
+                    silent.gain.value = 0.00001;
+                    unlock.connect(silent); silent.connect(this.ctx.destination);
+                    unlock.start(0); unlock.stop(this.ctx.currentTime + 0.035);
+                    if (this.ctx.state !== 'running') await this.ctx.resume();
+                    if (this.ctx.state !== 'running') return false;
+                    this.enabled = true;
+                    this.step = 0;
+                    this.nextTime = this.ctx.currentTime + 0.045;
+                    const now = this.ctx.currentTime;
+                    this.bus.gain.cancelScheduledValues(now);
+                    this.bus.gain.setValueAtTime(this.bus.gain.value, now);
+                    this.bus.gain.setTargetAtTime(this.volume / 100 * 0.76, now, 0.16);
+                    if (this.timer !== null) clearInterval(this.timer);
+                    this.timer = setInterval(() => this.schedule(), 85);
+                    this.schedule();
+                    return true;
+                } catch (error) {
+                    console.warn('No se pudo activar la banda sonora', error);
+                    this.stop();
+                    return false;
+                }
             }
             stop() {
                 this.enabled = false;
@@ -205,16 +228,16 @@ class CyberpunkMusicEngine {
                     this.bus.gain.setTargetAtTime(0, now, 0.06);
                 }
             }
-            toggle() { if (this.enabled) { this.stop(); return false; } return this.start(); }
+            async toggle() { if (this.enabled && this.ctx?.state === 'running') { this.stop(); return false; } if (this.enabled) this.stop(); return await this.start(); }
             setMode(mode) { this.mode = ['menu', 'explore', 'challenge', 'focus', 'victory'].includes(mode) ? mode : 'explore'; }
             setVolume(pct) {
                 const n = Number(pct);
-                this.volume = Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 38;
+                this.volume = Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 65;
                 try { localStorage.setItem('holos_music_volume_v42', String(this.volume)); } catch (_) {}
                 if (this.bus && this.ctx) {
                     const now = this.ctx.currentTime;
                     this.bus.gain.cancelScheduledValues(now);
-                    this.bus.gain.setTargetAtTime(this.enabled ? this.volume / 100 * 0.44 : 0, now, 0.05);
+                    this.bus.gain.setTargetAtTime(this.enabled ? this.volume / 100 * 0.76 : 0, now, 0.05);
                 }
             }
             schedule() {
@@ -284,8 +307,8 @@ class CyberpunkMusicEngine {
                 const roots = [55, 43.65, 65.41, 49];
                 const ambient = this.mode === 'menu' || this.mode === 'focus' || this.mode === 'victory';
                 if (n === 0) {
-                    chords[bar].forEach((hz, i) => this.tone(hz * 2, at, 2.65, ambient ? 0.022 : 0.016, 'sine', 0, 0.14 + i * 0.025));
-                    this.tone(roots[bar] / 2, at, 1.6, ambient ? 0.032 : 0.04, 'triangle', 420, 0.055);
+                    chords[bar].forEach((hz, i) => this.tone(hz * 2, at, 2.65, ambient ? 0.057 : 0.032, 'sine', 0, 0.14 + i * 0.025));
+                    this.tone(roots[bar] / 2, at, 1.6, ambient ? 0.072 : 0.058, 'triangle', 420, 0.055);
                 }
                 if (this.mode === 'focus' || this.mode === 'victory') {
                     // Minimal texture: no metronomic accents to interfere with breathing timing.
@@ -293,16 +316,19 @@ class CyberpunkMusicEngine {
                     return;
                 }
                 if (this.mode === 'menu') {
-                    if (n === 8) this.tone(chords[bar][2] * 2, at, 0.8, 0.009, 'triangle', 1100);
+                    if (n === 8) this.tone(chords[bar][2] * 2, at, 0.8, 0.028, 'triangle', 1500);
+                    // Una base rítmica suave, reconocible incluso en altavoces pequeños.
+                    if (n === 0 || n === 8) this.percussion(at, 'kick');
+                    if (n === 12) this.percussion(at, 'hat');
                     return;
                 }
                 const energetic = this.mode === 'challenge';
                 if ([0, 3, 6, 8, 11, 14].includes(n)) {
                     const freq = roots[bar] * (n === 6 || n === 14 ? 1.5 : 1);
-                    this.tone(freq, at, 0.21, energetic ? 0.095 : 0.06, 'sawtooth', 360, 0.006);
+                    this.tone(freq, at, 0.21, energetic ? 0.13 : 0.085, 'sawtooth', 360, 0.006);
                 }
                 if ([2, 6, 10, 14].includes(n)) {
-                    this.tone(chords[bar][(n / 2) % 3 | 0] * 4, at, 0.19, energetic ? 0.019 : 0.012, 'triangle', 1600);
+                    this.tone(chords[bar][(n / 2) % 3 | 0] * 4, at, 0.19, energetic ? 0.033 : 0.025, 'triangle', 1600);
                 }
                 if (n === 0 || n === 8) this.percussion(at, 'kick');
                 if (energetic && (n === 4 || n === 12)) this.percussion(at, 'snare');
@@ -507,8 +533,9 @@ function art(focus='all'){
 }
 function historyMarkup(){return state.history.length?state.history.slice(-8).map((h,i)=>`<div class="drawer-item">${esc(h.label)}</div>`).join(''):'<p class="empty">Aún no hay decisiones.</p>'}
 function render(){let root=$('screen');
- if(onHome){const completed=(readJson(ENDKEY)||[]).length;root.innerHTML=`<section class="intro"><div class="micro">TEMPORADA I / EXPEDIENTES DEL DISTRITO NEÓN</div><h1 class="hero-title">NEON<br><span>CHRONICLES</span></h1><p class="subhead">THE FOUR DIAPHRAGMS · MÉTODO HOLOS</p><button class="primary" id="play">${state.history.length?'CONTINUAR INVESTIGACIÓN →':'ACEPTAR EL CASO 017 →'}</button><div class="frame" style="margin-top:14px">${art('all')}</div><div class="callout"><strong>Distrito HOLOS · Año 2149.</strong><br>Eres un detective biomecánico. Tienes cuatro lentes para leer el cuerpo, doce regiones que investigar y una ciudad que no cuenta toda la verdad.</div><div class="season-stats"><div><strong>8</strong><small>CAPÍTULOS</small></div><div><strong>12</strong><small>REGIONES</small></div><div><strong>${completed}/${END_COUNT}</strong><small>FINALES HALLADOS</small></div></div>${state.history.length?'<button class="tool" id="newgame" style="width:100%;margin-top:13px">↻ Comenzar una nueva investigación</button>':''}<p class="underbtn"><strong>Jugar es sencillo:</strong> lees la escena, tomas una decisión y descubres sus consecuencias. Las pistas se guardan en tu cuaderno.</p></section>`;
- $('play').addEventListener('click',()=>{onHome=false;render();window.scrollTo(0,0)});
+ if(onHome){const completed=(readJson(ENDKEY)||[]).length;root.innerHTML=`<section class="intro"><div class="micro">TEMPORADA I / EXPEDIENTES DEL DISTRITO NEÓN</div><h1 class="hero-title">NEON<br><span>CHRONICLES</span></h1><p class="subhead">THE FOUR DIAPHRAGMS · MÉTODO HOLOS</p><button class="primary" id="play">${state.history.length?'CONTINUAR INVESTIGACIÓN →':'ACEPTAR EL CASO 017 →'}</button><button class="music-cta" id="music-intro-btn" type="button">♫ ACTIVAR MÚSICA CYBERPUNK</button><div class="frame" style="margin-top:14px">${art('all')}</div><div class="callout"><strong>Distrito HOLOS · Año 2149.</strong><br>Eres un detective biomecánico. Tienes cuatro lentes para leer el cuerpo, doce regiones que investigar y una ciudad que no cuenta toda la verdad.</div><div class="season-stats"><div><strong>8</strong><small>CAPÍTULOS</small></div><div><strong>12</strong><small>REGIONES</small></div><div><strong>${completed}/${END_COUNT}</strong><small>FINALES HALLADOS</small></div></div>${state.history.length?'<button class="tool" id="newgame" style="width:100%;margin-top:13px">↻ Comenzar una nueva investigación</button>':''}<p class="underbtn"><strong>Jugar es sencillo:</strong> lees la escena, tomas una decisión y descubres sus consecuencias. Las pistas se guardan en tu cuaderno.</p></section>`;
+ $('play').addEventListener('click',()=>{onHome=false;music.setMode('explore');render();window.scrollTo(0,0)});
+ $('music-intro-btn').addEventListener('click',toggleAudioFromUI);refreshAudioUI();
  if($('newgame'))$('newgame').addEventListener('click',()=>{if(confirm('¿Empezar otra investigación? Se sustituirá la partida actual, pero conservarás los finales descubiertos.')){state=init();store();onHome=false;render();window.scrollTo(0,0)}});
  return;}
  const scene=getScene(),ending=scene.kind==='end',chapter=scene.ch,found=(readJson(ENDKEY)||[]).length;
@@ -520,7 +547,45 @@ function render(){let root=$('screen');
  if($('restart'))$('restart').addEventListener('click',()=>{state=init();store();openEvidence=false;music.setMode('explore');render();window.scrollTo(0,0)});
  if($('menu'))$('menu').addEventListener('click',()=>{onHome=true;music.setMode('menu');render();window.scrollTo(0,0)});
 }
-function initInterface(){music.setMode('menu');$('sound-btn').addEventListener('click',()=>{let on=music.toggle();sound.enabled=on;$('sound-btn').textContent=on?'♫ ON':'♫ OFF';$('sound-btn').classList.toggle('active',on);$('sound-btn').setAttribute('aria-pressed',String(on))});$('music-volume').value=String(music.volume);$('music-vol-label').textContent=music.volume+'%';$('music-volume').addEventListener('input',e=>{music.setVolume(e.target.value);$('music-vol-label').textContent=music.volume+'%'});$('help-btn').addEventListener('click',()=>{$('help-modal').hidden=false});$('close-help').addEventListener('click',()=>{$('help-modal').hidden=true});$('help-modal').addEventListener('click',e=>{if(e.target===$('help-modal'))$('help-modal').hidden=true});$('home-btn').addEventListener('click',()=>{onHome=true;music.setMode('menu');render();window.scrollTo(0,0)});document.addEventListener('keydown',e=>{if(e.key==='Escape')$('help-modal').hidden=true;if(!onHome&&!getScene().kind.includes('end')&&!e.ctrlKey&&!e.altKey){let i=Number(e.key)-1;if(i>=0&&i<getScene().options.length)choose(i)}});document.addEventListener('visibilitychange',()=>{if(document.hidden&&music.ctx)music.ctx.suspend().catch(()=>{});else if(music.enabled&&music.ctx)music.ctx.resume().catch(()=>{})});render()}
+function refreshAudioUI(message='') {
+  const on=music.enabled && music.ctx?.state==='running';
+  const btn=$('sound-btn'), status=$('audio-status'), intro=$('music-intro-btn');
+  btn.textContent=on?'♫ ON':'♫ OFF';btn.classList.toggle('active',on);
+  btn.setAttribute('aria-pressed',String(on));btn.title=on?'Silenciar banda sonora':'Activar banda sonora cyberpunk';
+  status.textContent=message||(on?'♫ Sonando · música cyberpunk activa':'Banda sonora desactivada · pulsa ♫ OFF');
+  status.classList.toggle('active',on);
+  if(intro){intro.textContent=on?'♫ SILENCIAR MÚSICA':'♫ ACTIVAR MÚSICA CYBERPUNK';intro.classList.toggle('active',on);}
+  $('music-vol-label').textContent=music.volume+'%';
+}
+async function toggleAudioFromUI(){
+  const wasOn=music.enabled;
+  if(!wasOn){$('audio-status').textContent='Activando banda sonora…';}
+  const on=await music.toggle();
+  sound.enabled=on;
+  if(on){
+    // Confirmación claramente audible: no solo se ilumina el botón.
+    sound.playTone(659.25,'triangle',0.18,0.17);
+    if(music.volume===0)music.setVolume(65);
+  }
+  refreshAudioUI(on?'♫ Sonando · música cyberpunk activa':wasOn?'Música silenciada': 'No se ha podido iniciar el sonido. Prueba Safari o Chrome.');
+}
+function initInterface(){
+ music.setMode('menu');
+ $('sound-btn').addEventListener('click',toggleAudioFromUI);
+ $('music-volume').value=String(music.volume);refreshAudioUI();
+ $('music-volume').addEventListener('input',e=>{music.setVolume(e.target.value);refreshAudioUI()});
+ $('help-btn').addEventListener('click',()=>{$('help-modal').hidden=false});
+ $('close-help').addEventListener('click',()=>{$('help-modal').hidden=true});
+ $('help-modal').addEventListener('click',e=>{if(e.target===$('help-modal'))$('help-modal').hidden=true});
+ $('home-btn').addEventListener('click',()=>{onHome=true;music.setMode('menu');render();window.scrollTo(0,0)});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')$('help-modal').hidden=true;if(!onHome&&!getScene().kind.includes('end')&&!e.ctrlKey&&!e.altKey){let i=Number(e.key)-1;if(i>=0&&i<getScene().options.length)choose(i)}});
+ document.addEventListener('visibilitychange',()=>{
+   if(!music.ctx)return;
+   if(document.hidden){ music.ctx.suspend().catch(()=>{}); }
+   else if(music.enabled){music.ctx.resume().then(()=>{music.nextTime=music.ctx.currentTime+.045;refreshAudioUI()}).catch(()=>{refreshAudioUI('♫ Toca el botón de música para reactivar el audio')})}
+ });
+ render()
+}
 initInterface();
 
 </script></body></html>
